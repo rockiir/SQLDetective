@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/rockiir/SQLDetective/static/css/main.0c601a0a.css",
+    "main.js": "/rockiir/SQLDetective/static/js/main.8c2fb024.js",
+    "static/js/453.f7157387.chunk.js": "/rockiir/SQLDetective/static/js/453.f7157387.chunk.js",
+    "index.html": "/rockiir/SQLDetective/index.html",
+    "main.0c601a0a.css.map": "/rockiir/SQLDetective/static/css/main.0c601a0a.css.map",
+    "main.8c2fb024.js.map": "/rockiir/SQLDetective/static/js/main.8c2fb024.js.map",
+    "453.f7157387.chunk.js.map": "/rockiir/SQLDetective/static/js/453.f7157387.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c601a0a.css",
+    "static/js/main.8c2fb024.js"
+  ]
+}
