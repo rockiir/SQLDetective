@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rockiir/SQLDetective/static/css/main.0c601a0a.css",
-    "main.js": "/rockiir/SQLDetective/static/js/main.8c2fb024.js",
-    "static/js/453.f7157387.chunk.js": "/rockiir/SQLDetective/static/js/453.f7157387.chunk.js",
-    "index.html": "/rockiir/SQLDetective/index.html",
-    "main.0c601a0a.css.map": "/rockiir/SQLDetective/static/css/main.0c601a0a.css.map",
-    "main.8c2fb024.js.map": "/rockiir/SQLDetective/static/js/main.8c2fb024.js.map",
-    "453.f7157387.chunk.js.map": "/rockiir/SQLDetective/static/js/453.f7157387.chunk.js.map"
+    "main.css": "/SQLDetective/static/css/main.0c601a0a.css",
+    "main.js": "/SQLDetective/static/js/main.372a171b.js",
+    "static/js/453.f7157387.chunk.js": "/SQLDetective/static/js/453.f7157387.chunk.js",
+    "index.html": "/SQLDetective/index.html",
+    "main.0c601a0a.css.map": "/SQLDetective/static/css/main.0c601a0a.css.map",
+    "main.372a171b.js.map": "/SQLDetective/static/js/main.372a171b.js.map",
+    "453.f7157387.chunk.js.map": "/SQLDetective/static/js/453.f7157387.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0c601a0a.css",
-    "static/js/main.8c2fb024.js"
+    "static/js/main.372a171b.js"
   ]
 }
