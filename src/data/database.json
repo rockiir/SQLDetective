@@ -1,0 +1,85 @@
+{
+    "cities": [
+      {
+        "id": 1,
+        "name": "Tokyo",
+        "country": "Japan",
+        "last_sighting": "2024-11-15"
+      },
+      {
+        "id": 2,
+        "name": "Istanbul",
+        "country": "Turkey",
+        "last_sighting": "2024-11-16"
+      },
+      {
+        "id": 3,
+        "name": "Cairo",
+        "country": "Egypt",
+        "last_sighting": "2024-11-17"
+      },
+      {
+        "id": 4,
+        "name": "Rio de Janeiro",
+        "country": "Brazil",
+        "last_sighting": "2024-11-18"
+      }
+    ],
+    "witnesses": [
+      {
+        "id": 1,
+        "name": "Alice",
+        "city_id": 1,
+        "testimony": "I saw a woman in a red hat near the market.",
+        "credibility": 90
+      },
+      {
+        "id": 2,
+        "name": "Bob",
+        "city_id": 2,
+        "testimony": "She was seen walking along the bridge.",
+        "credibility": 85
+      },
+      {
+        "id": 3,
+        "name": "Clara",
+        "city_id": 3,
+        "testimony": "She bought a ticket for a night train.",
+        "credibility": 95
+      },
+      {
+        "id": 4,
+        "name": "David",
+        "city_id": 4,
+        "testimony": "She visited the statue in the morning.",
+        "credibility": 88
+      }
+    ],
+    "clues": [
+      {
+        "id": 1,
+        "city_id": 1,
+        "description": "A receipt from a sushi restaurant.",
+        "timestamp": "2024-11-15 12:30:00"
+      },
+      {
+        "id": 2,
+        "city_id": 2,
+        "description": "A ticket stub for a ferry ride.",
+        "timestamp": "2024-11-16 14:45:00"
+      },
+      {
+        "id": 3,
+        "city_id": 3,
+        "description": "A photograph of the pyramids.",
+        "timestamp": "2024-11-17 18:00:00"
+      },
+      {
+        "id": 4,
+        "city_id": 4,
+        "description": "A postcard with a picture of Christ the Redeemer.",
+        "timestamp": "2024-11-18 09:15:00"
+      }
+    ]
+  }
+  
