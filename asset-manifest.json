@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/SQLDetective/static/css/main.9ffd0c6d.css",
-    "main.js": "/SQLDetective/static/js/main.3b59cea7.js",
+    "main.css": "/SQLDetective/static/css/main.960af0a5.css",
+    "main.js": "/SQLDetective/static/js/main.3788c6f6.js",
     "static/js/453.f7157387.chunk.js": "/SQLDetective/static/js/453.f7157387.chunk.js",
     "index.html": "/SQLDetective/index.html",
-    "main.9ffd0c6d.css.map": "/SQLDetective/static/css/main.9ffd0c6d.css.map",
-    "main.3b59cea7.js.map": "/SQLDetective/static/js/main.3b59cea7.js.map",
+    "main.960af0a5.css.map": "/SQLDetective/static/css/main.960af0a5.css.map",
+    "main.3788c6f6.js.map": "/SQLDetective/static/js/main.3788c6f6.js.map",
     "453.f7157387.chunk.js.map": "/SQLDetective/static/js/453.f7157387.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ffd0c6d.css",
-    "static/js/main.3b59cea7.js"
+    "static/css/main.960af0a5.css",
+    "static/js/main.3788c6f6.js"
   ]
 }
