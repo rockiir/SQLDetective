@@ -27,7 +27,7 @@ export const translations = {
       finalScore: "Final Score",
     },
     pt: {
-      title: "ONDE NO MUNDO ESTÁ",
+      title: "ONDE ESTÁ",
       subtitle: "CARMEN SANDIEGO",
       enterName: "Digite seu Nome de Agente",
       startMission: "INICIAR MISSÃO",

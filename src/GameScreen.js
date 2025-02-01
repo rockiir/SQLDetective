@@ -1,9 +1,16 @@
 import React from 'react';
+import { databases } from './databases'; 
 import {
     Terminal, Map, User, Database, Award, HelpCircle,
     Clock, Target, Compass, RadioTower, AlertCircle
 } from 'lucide-react';
 import QueryResultTable from './QueryResultTable';
+const getTableColumns = (tableName) => {
+    if (databases[tableName] && databases[tableName].length > 0) {
+        return Object.keys(databases[tableName][0]).join(', ');
+    }
+    return '';
+};
 
 const GameScreen = ({
     playerName,
@@ -20,7 +27,8 @@ const GameScreen = ({
     lastResult,
     currentHintIndex,
     t,
-    language 
+    language,
+    hintsList 
 }) => (
     <div className="grid grid-cols-12 gap-4 p-4">
         <div className="col-span-12 bg-gray-800 rounded-xl border border-blue-900 p-4 mb-4">
@@ -36,7 +44,7 @@ const GameScreen = ({
                     </div>
                     <div className="bg-yellow-900 px-4 py-2 rounded-lg">
                         <span className="text-yellow-300">{t.hints}:</span>
-                        <span className="ml-2 text-white font-bold">{3 - hintsUsed} {t.remaining}</span>
+                        <span className="ml-2 text-white font-bold">{missions[currentMission].hints.length - hintsUsed} {t.remaining}</span>
                     </div>
                 </div>
                 <div className="flex space-x-4">
@@ -74,31 +82,37 @@ const GameScreen = ({
                 </button>
                 <button
                     onClick={handleShowHint}
-                    disabled={hintsUsed >= 3 && !showHint}
-                    className={`px-6 py-3 rounded-lg transition flex items-center ${showHint ? 'bg-gray-600 text-white hover:bg-gray-700'
-                            : hintsUsed >= 3 ? 'bg-gray-500 text-gray-300 cursor-not-allowed'
-                                : 'bg-yellow-600 text-black hover:bg-yellow-700'
-                        }`}
+                    className={`px-6 py-3 rounded-lg transition flex items-center ${
+                        hintsUsed >= missions[currentMission].hints.length
+                            ? 'bg-gray-600 text-white hover:bg-gray-700'
+                            : 'bg-yellow-600 text-black hover:bg-yellow-700'
+                    }`}
                 >
-                    {hintsUsed >= 3 && !showHint ? (
-                        <AlertCircle className="mr-2 inline" />
+                    {hintsUsed >= missions[currentMission].hints.length ? (
+                        <HelpCircle className="mr-2 inline" />
                     ) : (
                         <HelpCircle className="mr-2 inline" />
                     )}
-                    {showHint ? t.hideHint : `${t.useHint} (${3 - hintsUsed} ${t.left})`}
+                    {hintsUsed >= missions[currentMission].hints.length
+                        ? t.hideHint
+                        : `${t.useHint} (${missions[currentMission].hints.length - hintsUsed} ${t.left})`
+                    }
                 </button>
             </div>
 
-            {showHint && (
+            {showHint && hintsList && (
                 <div className="mt-4 p-4 bg-blue-900 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-yellow-300 font-bold">
-                            {t.hints} {currentHintIndex + 1} of 3
+                            {t.hints} {hintsUsed} of {missions[currentMission].hints.length}
                         </span>
                     </div>
-                    <p className="text-white">
-                        {missions[currentMission].hints[currentHintIndex][language] || missions[currentMission].hints[currentHintIndex].en}
-                    </p>          </div>
+                    {hintsList.map((hint, index) => (
+                        <p key={index} className="text-white">
+                            {hint[language] || hint.en}
+                        </p>
+                    ))}
+                </div>
             )}
 
             {lastResult && (
@@ -124,19 +138,26 @@ const GameScreen = ({
                     <RadioTower className="mr-2" /> {t.availableIntel}
                 </h3>
                 <div className="text-sm space-y-2">
-                    <div className="flex items-center">
-                        <Database className="mr-2 text-green-400" />
-                        cities (id, name, country, last_sighting)
-                    </div>
-                    <div className="flex items-center">
-                        <User className="mr-2 text-red-400" />
-                        witnesses (id, name, city_id, testimony, credibility)
-                    </div>
-                    <div className="flex items-center">
-                        <Map className="mr-2 text-purple-400" />
-                        clues (id, city_id, description, timestamp)
-                    </div>
-                </div>
+    {Object.keys(databases).map((table, index) => {
+        // Pega as colunas da tabela (usando o primeiro item da tabela)
+        const columns = databases[table][0] ? Object.keys(databases[table][0]) : [];
+
+        return (
+            <div key={index} className="flex items-center">
+                {/* Ícone da tabela */}
+                {table === "cities" && <Database className="mr-2 text-green-400" />}
+                {table === "witnesses" && <User className="mr-2 text-red-400" />}
+                {table === "clues" && <Map className="mr-2 text-purple-400" />}
+                {table === "artifacts" && <Award className="mr-2 text-yellow-400" />}
+
+                {/* Nome da tabela e colunas */}
+                <span>
+                    {table} ({columns.join(", ")})
+                </span>
+            </div>
+        );
+    })}
+</div>
             </div>
         </div>
     </div>

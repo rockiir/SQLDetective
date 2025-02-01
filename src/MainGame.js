@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react'; // Importe o ícone Clock
+import { Clock } from 'lucide-react';
 import IntroScreen from './IntroScreen';
 import GameScreen from './GameScreen';
 import { missions } from './missions';
@@ -13,6 +13,7 @@ const MainGame = () => {
     const [currentMission, setCurrentMission] = useState(0);
     const [query, setQuery] = useState('');
     const [hintsUsed, setHintsUsed] = useState(0);
+    const [hintsList, setHintsList] = useState([]); // Estado para armazenar as dicas
     const [showHint, setShowHint] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
     const [lastResult, setLastResult] = useState(null);
@@ -20,7 +21,7 @@ const MainGame = () => {
     const [score, setScore] = useState(0);
     const [showIntro, setShowIntro] = useState(true);
     const [currentHintIndex, setCurrentHintIndex] = useState(0);
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState('pt');
     const [gameOver, setGameOver] = useState(false);
     const t = translations[language];
 
@@ -40,62 +41,57 @@ const MainGame = () => {
 
     // Lógica para mostrar dicas
     const handleShowHint = () => {
-        if (!showHint && hintsUsed < 3) {
+        if (hintsUsed < missions[currentMission].hints.length) {
+            // Adiciona a próxima dica à lista
+            setHintsList(prev => [...prev, missions[currentMission].hints[hintsUsed]]);
+    
+            // Incrementa o número de dicas usadas
             setHintsUsed(prev => prev + 1);
+    
+            // Mostra as dicas
             setShowHint(true);
-            if (currentHintIndex < missions[currentMission].hints.length - 1) {
-                setCurrentHintIndex(prev => prev + 1);
-            }
-        } else if (showHint) {
-            setShowHint(false);
+        } else {
+            // Alterna a visibilidade das dicas (oculta ou exibe todas)
+            setShowHint(prev => !prev);
         }
     };
+
     const handleSubmit = () => {
-        const result = executeQuery(query);
-        const expectedResult = executeQuery(missions[currentMission].solution);
+        // Executa a query do jogador
+        const playerResult = executeQuery(query);
     
-        // Normaliza as queries para comparação
-        const normalizeQueryString = (queryString) => {
-            return queryString
-                .replace(/\s+/g, ' ') // Remove espaços extras
-                .replace(/\s*=\s*/g, '=') // Normaliza espaços ao redor do '='
-                .toLowerCase()
-                .trim();
-        };
-    
-        const normalizedQuery = normalizeQueryString(query);
-        const normalizedSolution = normalizeQueryString(missions[currentMission].solution);
-    
-        if (result.success) {
-            // Verifica se a query do jogador corresponde exatamente à solução esperada
-            if (normalizedQuery === normalizedSolution) {
-                // Resposta correta
-                const timeBonus = timer * 10;
-                setScore(prev => prev + 100 + timeBonus);
-                setLastResult({
-                    success: true,
-                    message: `${t.missionAccomplished} ${missions[currentMission].location}! ${t.timeBonus}: ${timeBonus} points`,
-                    data: result.data
-                });
-    
-                if (currentMission < missions.length - 1) {
-                    setTimeout(() => {
-                        setCurrentMission(prev => prev + 1);
-                        setQuery('');
-                        setTimer(300);
-                        setCurrentHintIndex(0);
-                        setShowHint(false);
-                    }, 2000);
-                } else {
-                    setGameOver(true);
-                }
-            } else {
-                // Resposta incorreta
+        if (playerResult.success) {
+            // Verifica se a query do jogador retornou algum dado
+            if (playerResult.data.length === 0) {
+                // Resposta incorreta (array vazio)
                 setLastResult({
                     success: false,
-                    message: "Incorrect query. Make sure you follow the mission instructions.",
-                    data: result.data
+                    message: "No results found. Check your query conditions.",
+                    data: playerResult.data
                 });
+                return;
+            }
+    
+            // Se a query retornou algum resultado, aceita-a como válida
+            const timeBonus = timer * 10;
+            setScore(prev => prev + 100 + timeBonus);
+            setLastResult({
+                success: true,
+                message: `${t.missionAccomplished} ${missions[currentMission].location}! ${t.timeBonus}: ${timeBonus} points`,
+                data: playerResult.data
+            });
+    
+            if (currentMission < missions.length - 1) {
+                setTimeout(() => {
+                    setCurrentMission(prev => prev + 1);
+                    setQuery('');
+                    setTimer(300);
+                    setCurrentHintIndex(0);
+                    setShowHint(false);
+                    setHintsList([]); // Limpa a lista de dicas ao avançar para a próxima missão
+                }, 2000);
+            } else {
+                setGameOver(true);
             }
         } else {
             // Query inválida
@@ -151,6 +147,7 @@ const MainGame = () => {
                     currentHintIndex={currentHintIndex}
                     t={t}
                     language={language}
+                    hintsList={hintsList} // Passa a lista de dicas
                 />
             )}
         </div>
